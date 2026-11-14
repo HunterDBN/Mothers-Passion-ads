@@ -128,7 +128,7 @@ async function createPost(channel, text, imageUrl, dueAt) {
     schedulingType: "automatic",
     mode: "customScheduled",
     dueAt: dueAt.toISOString(),
-    assets: { images: [{ url: imageUrl }] },
+    assets: [{ image: { url: imageUrl } }],
   };
   if (channel.service === "facebook") input.metadata = { facebook: { type: "post" } };
   const d = await gql(
@@ -146,12 +146,27 @@ async function createPost(channel, text, imageUrl, dueAt) {
 }
 
 // ---------- commands ----------
+async function describeType(name) {
+  try {
+    const d = await gql(`query T($n: String!) { __type(name: $n) { name kind inputFields { name type { kind name ofType { kind name ofType { kind name } } } } } }`, { n: name });
+    const t = d.__type;
+    if (!t) return console.log(`  type ${name}: not found`);
+    const show = (ty) => (ty ? `${ty.kind === "NON_NULL" ? "!" : ty.kind === "LIST" ? "[]" : ""}${ty.name || ""}${ty.ofType ? show(ty.ofType) : ""}` : "");
+    console.log(`  type ${name}: ${(t.inputFields || []).map((f) => `${f.name}:${show(f.type)}`).join(", ")}`);
+  } catch (e) {
+    console.log(`  type ${name}: introspection failed (${e.message.slice(0, 120)})`);
+  }
+}
+
 async function discover() {
   const channels = await listChannels();
   console.log(`API mode: ${apiMode}${gqlEndpoint ? ` (${gqlEndpoint})` : ""}`);
   console.log(`Found ${channels.length} channel(s):`);
   for (const c of channels) console.log(`  - ${c.service}: ${c.name} [${c.id}]`);
   const targets = channels.filter((c) => SERVICES.includes(c.service));
+  if (apiMode === "gql") {
+    for (const n of ["CreatePostInput", "AssetInput", "AssetsInput", "ImageAssetInput", "PostInputMetaData", "FacebookPostMetadataInput", "TikTokPostMetadataInput"]) await describeType(n);
+  }
   console.log(`Will post to: ${targets.map((c) => `${c.service}:${c.name}`).join(", ") || "NONE"}`);
 }
 
@@ -193,7 +208,7 @@ async function scheduleDay(dateArg) {
       }
     }
   }
-  if (!DRY) {
+  if (!DRY && failures.length === 0) {
     state.next_index = idx % ads.length;
     state.scheduled_days = [...state.scheduled_days, date].slice(-60);
     writeJson("ads/state.json", state);
