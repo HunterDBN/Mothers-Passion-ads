@@ -1,0 +1,48 @@
+{
+  "site": "https://amotherspassion.ca",
+  "hashtags": "#AMothersPassion #MomSelfCare #SelfCareForMoms #MomLife #RealWellness",
+  "ads": [
+    {
+      "id": "ad01-made-for-the-mom",
+      "canva": "https://www.canva.com/d/eU3meRH02wQtIh2",
+      "caption": "You pour into everyone else all day. This is your 2 minutes. 🌹\n\nOur Nourishing Rosehip Serum is rich in antioxidants to hydrate and revitalize your skin, naturally. Made for real moms.\n\nShop now at amotherspassion.ca 💗",
+      "tags": "#RosehipOil #NaturalSkincare"
+    },
+    {
+      "id": "ad02-run-the-bath",
+      "canva": "https://www.canva.com/d/_m97mul8aOhT2uX",
+      "caption": "Run the bath. You've earned it. 🛁\n\nOur Grapefruit + Spearmint Magnesium Bath Soak turns 20 minutes into a real reset for tired muscles and busy minds.\n\nShop now at amotherspassion.ca",
+      "tags": "#BathSoak #MagnesiumBath"
+    },
+    {
+      "id": "ad03-refill-your-cup",
+      "canva": "https://www.canva.com/d/kaA1cTj9mvXxuSS",
+      "caption": "Refill your cup before theirs. ☕️\n\nStart your morning with a moment that's just for you. Real wellness, made for real moms.\n\nDiscover more at amotherspassion.ca",
+      "tags": "#MorningRitual #MomMornings"
+    },
+    {
+      "id": "ad04-glow-ritual",
+      "canva": "https://www.canva.com/d/tiRex45V583wPCS",
+      "caption": "Your 2-minute glow ritual. ✨\n\nA few drops of our Nourishing Rosehip Serum to hydrate and revitalize your skin, naturally.\n\nShop now at amotherspassion.ca",
+      "tags": "#GlowingSkin #RosehipSerum"
+    },
+    {
+      "id": "ad05-quiet-moments",
+      "canva": "https://www.canva.com/d/wQ-n7CrSEJ9rXv2",
+      "caption": "Quiet moments, just for you. 🕯️\n\nThe kids are down. Now it's your turn to wind down with wellness made for real moms.\n\nShop now at amotherspassion.ca",
+      "tags": "#EveningRoutine #MeTime"
+    },
+    {
+      "id": "ad06-who-cares-for-you",
+      "canva": "https://www.canva.com/d/R6KOGBNpbAPIO4S",
+      "caption": "You care for them. Who cares for you? 💗\n\nBeing a mom doesn't mean putting yourself last. A Mother's Passion is built for women who refuse to run on empty.\n\nDiscover more at amotherspassion.ca",
+      "tags": "#MotherhoodUnplugged #MomsOfInstagram"
+    },
+    {
+      "id": "ad07-self-care-isnt-selfish",
+      "canva": "https://www.canva.com/d/FUOYtGkdn7fs4bA",
+      "caption": "Self-care isn't selfish. 🌸\n\nBath soaks, serums and simple rituals to help you feel like you again.\n\nShop now at amotherspassion.ca",
+      "tags": "#SelfCareSunday #WellnessJourney"
+    }
+  ]
+}

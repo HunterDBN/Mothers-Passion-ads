@@ -1,0 +1,44 @@
+name: Buffer daily ads
+
+# Every day at 09:00 UTC (1-2 AM in Vancouver) schedule that day's 4 ads in Buffer
+# for Facebook and TikTok at 7:30 AM, 12:15 PM, 5:30 PM and 8:30 PM Vancouver time.
+on:
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Vancouver date to schedule (YYYY-MM-DD). Blank = today."
+        required: false
+      dry_run:
+        description: "Set to 1 to preview without posting"
+        required: false
+        default: "0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: buffer-daily
+  cancel-in-progress: false
+
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Schedule ads in Buffer
+        env:
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+        run: node scripts/buffer.mjs schedule-day ${{ github.event.inputs.date }}
+      - name: Save rotation state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ads/state.json
+          git diff --cached --quiet || (git commit -m "Update ad rotation state" && git push)
