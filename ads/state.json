@@ -1,6 +1,79 @@
 {
-  "next_index": 4,
-  "scheduled_days": [
-    "2026-11-14"
-  ]
+  "next_index": 11,
+  "slots": {
+    "2026-11-14 07:30": {
+      "ad": null,
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-14 12:15": {
+      "ad": null,
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-14 17:30": {
+      "ad": null,
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-14 20:30": {
+      "ad": null,
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-15 07:30": {
+      "ad": "ad05-quiet-moments",
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-15 12:15": {
+      "ad": "ad06-who-cares-for-you",
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-15 17:30": {
+      "ad": "ad07-self-care-isnt-selfish",
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-15 20:30": {
+      "ad": "ad08-five-minutes",
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-16 07:30": {
+      "ad": "ad09-grapefruit-spearmint",
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-16 12:15": {
+      "ad": "ad10-rest-is-productive",
+      "done": [
+        "facebook",
+        "tiktok"
+      ]
+    },
+    "2026-11-16 17:30": {
+      "ad": "ad11-moms-deserve-good-things",
+      "done": []
+    }
+  }
 }
