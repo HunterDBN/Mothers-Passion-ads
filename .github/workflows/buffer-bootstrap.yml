@@ -1,0 +1,60 @@
+name: Buffer bootstrap (branch)
+
+# Runs on pushes to the setup branch: pulls Canva exports into ads/images,
+# lists Buffer channels, and (when the commit message contains [schedule])
+# fills the Buffer queue as far ahead as Buffer allows, using images served from this branch.
+on:
+  push:
+    branches: [claude/project-thread-7spy7t]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download Canva exports
+        run: |
+          set -e
+          mkdir -p ads/images
+          for id in $(jq -r 'keys[]' ads/downloads.json); do
+            f="ads/images/$id.jpg"
+            if [ ! -s "$f" ]; then
+              url=$(jq -r --arg k "$id" '.[$k]' ads/downloads.json)
+              curl -sSfL "$url" -o "$f" && echo "downloaded $f" || echo "FAILED $f"
+            fi
+          done
+          ls -la ads/images
+
+      - name: Commit images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ads/images
+          git diff --cached --quiet || (git commit -m "Add exported ad images" && git push)
+
+      - name: List Buffer channels
+        env:
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+        run: node scripts/buffer.mjs discover
+
+      - name: Fill the Buffer queue
+        if: contains(github.event.head_commit.message, '[schedule]')
+        env:
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+          IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/ads/images
+        run: node scripts/buffer.mjs fill
+
+      - name: Save rotation state
+        if: always() && contains(github.event.head_commit.message, '[schedule]')
+        run: |
+          git pull --rebase || true
+          git add ads/state.json
+          git diff --cached --quiet || (git commit -m "Update ad rotation state" && git push)
