@@ -126,11 +126,14 @@ async function createPost(channel, text, imageUrl, dueAt) {
     text,
     channelId: channel.id,
     schedulingType: "automatic",
+    needsApproval: false,
     mode: "customScheduled",
     dueAt: dueAt.toISOString(),
     assets: [{ image: { url: imageUrl } }],
   };
   if (channel.service === "facebook") input.metadata = { facebook: { type: "post" } };
+  // The ad photos are AI-generated, so TikTok's AI-content label is set.
+  if (channel.service === "tiktok") input.metadata = { tiktok: { title: text.split("\n")[0].slice(0, 90), isAiGenerated: true } };
   const d = await gql(
     `mutation Create($input: CreatePostInput!) {
       createPost(input: $input) {
