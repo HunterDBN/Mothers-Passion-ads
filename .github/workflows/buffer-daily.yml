@@ -1,14 +1,15 @@
 name: Buffer daily ads
 
-# Every day at 09:00 UTC (1-2 AM in Vancouver) schedule that day's 4 ads in Buffer
-# for Facebook and TikTok at 7:30 AM, 12:15 PM, 5:30 PM and 8:30 PM Vancouver time.
+# Every 6 hours, top up the Buffer queue for Facebook and TikTok: 4 posts a day at
+# 7:30 AM, 12:15 PM, 5:30 PM and 8:30 PM Vancouver time, as many days ahead as
+# Buffer's queue limit allows (up to FILL_DAYS). As posts go out, new ones are added.
 on:
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "15 */6 * * *"
   workflow_dispatch:
     inputs:
-      date:
-        description: "Vancouver date to schedule (YYYY-MM-DD). Blank = today."
+      days:
+        description: "How many days ahead to fill (default 14)."
         required: false
       dry_run:
         description: "Set to 1 to preview without posting"
@@ -30,11 +31,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Schedule ads in Buffer
+      - name: Top up Buffer queue
         env:
           BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
           DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
-        run: node scripts/buffer.mjs schedule-day ${{ github.event.inputs.date }}
+        run: node scripts/buffer.mjs fill ${{ github.event.inputs.days }}
       - name: Save rotation state
         if: always()
         run: |

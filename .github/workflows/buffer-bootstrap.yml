@@ -2,7 +2,7 @@ name: Buffer bootstrap (branch)
 
 # Runs on pushes to the setup branch: pulls Canva exports into ads/images,
 # lists Buffer channels, and (when the commit message contains [schedule])
-# schedules today's ads using images served from this branch.
+# fills the Buffer queue as far ahead as Buffer allows, using images served from this branch.
 on:
   push:
     branches: [claude/project-thread-7spy7t]
@@ -45,12 +45,12 @@ jobs:
           BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
         run: node scripts/buffer.mjs discover
 
-      - name: Schedule today's ads
+      - name: Fill the Buffer queue
         if: contains(github.event.head_commit.message, '[schedule]')
         env:
           BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
           IMAGE_BASE_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/ads/images
-        run: node scripts/buffer.mjs schedule-day
+        run: node scripts/buffer.mjs fill
 
       - name: Save rotation state
         if: always() && contains(github.event.head_commit.message, '[schedule]')

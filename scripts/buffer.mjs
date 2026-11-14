@@ -3,7 +3,8 @@
 //
 // Commands:
 //   node scripts/buffer.mjs discover            List the Buffer channels this token can post to.
-//   node scripts/buffer.mjs schedule-day [date] Schedule the next 4 ads for a Vancouver date (default: today).
+//   node scripts/buffer.mjs fill [days]         Queue 4 ads/day from today through N days ahead (default 14),
+//                                               stopping at Buffer's queue limit. Safe to run repeatedly.
 //
 // Env:
 //   BUFFER_ACCESS_TOKEN  required
@@ -173,55 +174,100 @@ async function discover() {
   console.log(`Will post to: ${targets.map((c) => `${c.service}:${c.name}`).join(", ") || "NONE"}`);
 }
 
-async function scheduleDay(dateArg) {
-  const date = dateArg || vancouverToday();
-  const { ads, hashtags } = readJson("ads/ads.json");
-  const state = readJson("ads/state.json");
-  if (state.scheduled_days.includes(date)) {
-    console.log(`${date} already scheduled; nothing to do.`);
-    return;
-  }
-  const channels = DRY ? [] : (await listChannels()).filter((c) => SERVICES.includes(c.service));
-  if (!DRY && channels.length === 0) throw new Error(`No ${SERVICES.join("/")} channels found in Buffer.`);
+function addDays(dateStr, n) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d + n));
+  return t.toISOString().slice(0, 10);
+}
 
+const isLimitError = (msg) => /limit|maximum|max(imum)? (number|posts)|queue (is )?full|upgrade|too many/i.test(msg);
+
+function loadState() {
+  const st = readJson("ads/state.json");
+  st.slots ||= {};
+  // Migrate the first version, which only tracked whole days (ads 1-4 on both channels).
+  if (Array.isArray(st.scheduled_days)) {
+    for (const day of st.scheduled_days) {
+      SLOTS.forEach((slot, i) => {
+        st.slots[`${day} ${slot}`] ||= { ad: null, done: ["facebook", "tiktok"] };
+      });
+    }
+    delete st.scheduled_days;
+  }
+  return st;
+}
+
+// Fill every slot from today through `days` days ahead, skipping slots already queued.
+// Stops cleanly when Buffer refuses because the queue limit is reached; the next run
+// (every few hours) picks up where it left off as posts go out and free up room.
+async function fill(daysArg) {
+  const days = Number(daysArg || process.env.FILL_DAYS || 14);
+  const { ads, hashtags } = readJson("ads/ads.json");
+  const state = loadState();
+  const channels = DRY
+    ? SERVICES.map((s) => ({ service: s, name: "dry-run", id: "-" }))
+    : (await listChannels()).filter((c) => SERVICES.includes(c.service));
+  if (channels.length === 0) throw new Error(`No ${SERVICES.join("/")} channels found in Buffer.`);
+
+  const today = vancouverToday();
   const now = Date.now();
-  let idx = state.next_index;
-  let scheduled = 0;
+  let created = 0;
+  let limitHit = null;
+  let lastCovered = null;
   const failures = [];
-  for (const slot of SLOTS) {
-    const due = vancouverToUtc(date, slot);
-    if (due.getTime() < now + 10 * 60 * 1000) {
-      console.log(`Skip ${date} ${slot} (already passed)`);
-      continue;
-    }
-    const ad = ads[idx % ads.length];
-    idx += 1;
-    const text = `${ad.caption}\n\n${hashtags} ${ad.tags || ""}`.trim();
-    const imageUrl = `${IMAGE_BASE}/${ad.id}.jpg`;
-    for (const ch of DRY ? [{ service: "dry-run", name: "-" }] : channels) {
-      const label = `${date} ${slot} ${TZ} -> ${ch.service}:${ch.name} :: ${ad.id}`;
-      if (DRY) { console.log(`[dry] ${label} (${due.toISOString()})`); continue; }
-      try {
-        const id = await createPost(ch, text, imageUrl, due);
-        console.log(`Scheduled ${label} (post ${id})`);
-        scheduled += 1;
-      } catch (e) {
-        console.log(`FAILED ${label}: ${e.message}`);
-        failures.push(label);
+
+  outer: for (let i = 0; i < days; i++) {
+    const date = addDays(today, i);
+    for (const slot of SLOTS) {
+      const key = `${date} ${slot}`;
+      const due = vancouverToUtc(date, slot);
+      const rec = state.slots[key];
+      const pending = channels.filter((c) => !(rec?.done || []).includes(c.service));
+      if (pending.length === 0) { lastCovered = key; continue; }
+      if (due.getTime() < now + 10 * 60 * 1000) continue;
+      const entry = rec || { ad: null, done: [] };
+      if (!entry.ad) {
+        entry.ad = ads[state.next_index % ads.length].id;
+        state.next_index = (state.next_index + 1) % ads.length;
       }
+      state.slots[key] = entry;
+      const ad = ads.find((a) => a.id === entry.ad) || ads[0];
+      const text = `${ad.caption}\n\n${hashtags} ${ad.tags || ""}`.trim();
+      const imageUrl = `${IMAGE_BASE}/${ad.id}.jpg`;
+      for (const ch of pending) {
+        const label = `${key} ${TZ} -> ${ch.service}:${ch.name} :: ${ad.id}`;
+        if (DRY) { console.log(`[dry] ${label}`); entry.done.push(ch.service); continue; }
+        try {
+          const id = await createPost(ch, text, imageUrl, due);
+          entry.done.push(ch.service);
+          created += 1;
+          console.log(`Scheduled ${label} (post ${id})`);
+        } catch (e) {
+          if (isLimitError(e.message)) {
+            limitHit = `${ch.service}: ${e.message}`;
+            console.log(`Queue limit reached at ${label}: ${e.message}`);
+            break outer;
+          }
+          console.log(`FAILED ${label}: ${e.message}`);
+          failures.push(label);
+        }
+      }
+      if (channels.every((c) => entry.done.includes(c.service))) lastCovered = key;
     }
   }
-  if (!DRY && failures.length === 0) {
-    state.next_index = idx % ads.length;
-    state.scheduled_days = [...state.scheduled_days, date].slice(-60);
-    writeJson("ads/state.json", state);
-  }
-  console.log(`Done: ${scheduled} post(s) scheduled, ${failures.length} failure(s).`);
-  if (failures.length) process.exitCode = 1;
+
+  // Forget slots more than a week old so the file stays small.
+  const cutoff = addDays(today, -7);
+  for (const k of Object.keys(state.slots)) if (k.slice(0, 10) < cutoff) delete state.slots[k];
+  if (!DRY) writeJson("ads/state.json", state);
+
+  console.log(`Created ${created} post(s). Queue now covers through: ${lastCovered || "nothing yet"} (${TZ}).`);
+  if (limitHit) console.log(`Stopped at Buffer's queue limit (${limitHit}). Will top up on the next run.`);
+  if (failures.length) { console.log(`${failures.length} failure(s).`); process.exitCode = 1; }
 }
 
 const [cmd, arg] = process.argv.slice(2);
 if (!TOKEN && !DRY) { console.error("BUFFER_ACCESS_TOKEN is not set"); process.exit(1); }
 if (cmd === "discover") await discover();
-else if (cmd === "schedule-day") await scheduleDay(arg);
-else { console.error("usage: buffer.mjs discover | schedule-day [YYYY-MM-DD]"); process.exit(2); }
+else if (cmd === "fill" || cmd === "schedule-day") await fill(arg);
+else { console.error("usage: buffer.mjs discover | fill [days]"); process.exit(2); }
