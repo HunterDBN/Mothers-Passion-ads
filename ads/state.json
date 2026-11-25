@@ -1,79 +1,80 @@
 {
   "next_index": 11,
   "slots": {
-    "2026-11-14 07:30": {
-      "ad": null,
+    "2026-11-25 07:30": {
+      "ad": "g0000-birthday-cake-bath-bomb",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-14 12:15": {
-      "ad": null,
+    "2026-11-25 12:15": {
+      "ad": "g0001-solstice-bath-bomb",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-14 17:30": {
-      "ad": null,
+    "2026-11-25 17:30": {
+      "ad": "g0002-cat-beauty-1",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-14 20:30": {
-      "ad": null,
+    "2026-11-25 20:30": {
+      "ad": "g0003-teepee-hideout-deluxe-2-level-cat-tree",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-15 07:30": {
-      "ad": "ad05-quiet-moments",
+    "2026-11-26 07:30": {
+      "ad": "g0004-lavender-dream-dress-luxury-dog-dress",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-15 12:15": {
-      "ad": "ad06-who-cares-for-you",
+    "2026-11-26 12:15": {
+      "ad": "g0005-coffee-plant",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-15 17:30": {
-      "ad": "ad07-self-care-isnt-selfish",
+    "2026-11-26 17:30": {
+      "ad": "g0006-cat-candles-self-care",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-15 20:30": {
-      "ad": "ad08-five-minutes",
+    "2026-11-26 20:30": {
+      "ad": "g0007-bios-herbal-soap",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-16 07:30": {
-      "ad": "ad09-grapefruit-spearmint",
+    "2026-11-27 07:30": {
+      "ad": "g0008-sage-crown-herbal-tea-whole-flower-heads",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-16 12:15": {
-      "ad": "ad10-rest-is-productive",
+    "2026-11-27 12:15": {
+      "ad": "g0009-trillium-ottoman-with-sunbrella-cushion",
       "done": [
         "facebook",
         "tiktok"
       ]
     },
-    "2026-11-16 17:30": {
-      "ad": "ad11-moms-deserve-good-things",
+    "2026-11-27 17:30": {
+      "ad": "g0010-cat-dogs-cats",
       "done": []
     }
-  }
+  },
+  "gen_next": 11
 }
