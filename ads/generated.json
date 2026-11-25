@@ -1,0 +1,220 @@
+{
+  "ads": [
+    {
+      "id": "g0000-birthday-cake-bath-bomb",
+      "image": "gen/g0000-birthday-cake-bath-bomb.jpg",
+      "caption": "Birthday Cake Bath Bomb ✨\n\nA little everyday glow, just for you.\n\n$7.50 CAD\n\nShop now at amotherspassion.ca/products/birthday-cake-bath-bomb",
+      "tags": "#CleanBeauty #SelfCareRoutine",
+      "kind": "product",
+      "ref": "birthday-cake-bath-bomb",
+      "template": "arch"
+    },
+    {
+      "id": "g0001-solstice-bath-bomb",
+      "image": "gen/g0001-solstice-bath-bomb.jpg",
+      "caption": "Solstice Bath Bomb ✨\n\nSlow down, light a candle, take a breath.\n\n$7.50 CAD\n\nShop now at amotherspassion.ca/products/solstice-bath-bomb",
+      "tags": "#SelfCareSunday #CandleLover",
+      "kind": "product",
+      "ref": "solstice-bath-bomb",
+      "template": "frame"
+    },
+    {
+      "id": "g0002-cat-beauty-1",
+      "image": "gen/g0002-cat-beauty-1.jpg",
+      "caption": "Beauty That Feels Like Self-Care 💗\n\nClean, gentle beauty for your everyday glow.\n\nShop Beauty at amotherspassion.ca/collections/beauty-1",
+      "tags": "#CleanBeauty #SelfCareRoutine",
+      "kind": "category",
+      "ref": "beauty-1",
+      "template": "cat"
+    },
+    {
+      "id": "g0003-teepee-hideout-deluxe-2-level-cat-tree",
+      "image": "gen/g0003-teepee-hideout-deluxe-2-level-cat-tree.jpg",
+      "caption": "Teepee Hideout ✨\n\nBecause the fur babies are family too.\n\n$219.99 CAD\n\nShop now at amotherspassion.ca/products/teepee-hideout-deluxe-2-level-cat-tree",
+      "tags": "#DogsAndCats #FurBabies #PetLovers",
+      "kind": "product",
+      "ref": "teepee-hideout-deluxe-2-level-cat-tree",
+      "template": "arch"
+    },
+    {
+      "id": "g0004-lavender-dream-dress-luxury-dog-dress",
+      "image": "gen/g0004-lavender-dream-dress-luxury-dog-dress.jpg",
+      "caption": "Lavender Dream Dress ✨\n\nThe cutest outfits for your fur baby.\n\nOn sale: $52.00 CAD (was $70.00 CAD)\n\nShop now at amotherspassion.ca/products/lavender-dream-dress-luxury-dog-dress",
+      "tags": "#DogFashion #FurBabyFits #DogMom",
+      "kind": "product",
+      "ref": "lavender-dream-dress-luxury-dog-dress",
+      "template": "sale"
+    },
+    {
+      "id": "g0005-coffee-plant",
+      "image": "gen/g0005-coffee-plant.jpg",
+      "caption": "Coffee Plant ✨\n\nBring a little green into your days.\n\n$12.00 CAD\n\nShop now at amotherspassion.ca/products/coffee-plant",
+      "tags": "#GardenLife #PlantMom",
+      "kind": "product",
+      "ref": "coffee-plant",
+      "template": "arch"
+    },
+    {
+      "id": "g0006-cat-candles-self-care",
+      "image": "gen/g0006-cat-candles-self-care.jpg",
+      "caption": "Light a Candle. Take a Breath. 💗\n\nCandles, soaks and rituals that help you slow down.\n\nShop Candles & Self Care at amotherspassion.ca/collections/candles-self-care",
+      "tags": "#SelfCareSunday #CandleLover",
+      "kind": "category",
+      "ref": "candles-self-care",
+      "template": "cat"
+    },
+    {
+      "id": "g0007-bios-herbal-soap",
+      "image": "gen/g0007-bios-herbal-soap.jpg",
+      "caption": "Bios Herbal Soap ✨\n\nNatural, low-tox living for your family.\n\n$29.95 CAD\n\nShop now at amotherspassion.ca/products/bios-herbal-soap",
+      "tags": "#GreenHome #HealthyHome #LowTox",
+      "kind": "product",
+      "ref": "bios-herbal-soap",
+      "template": "frame"
+    },
+    {
+      "id": "g0008-sage-crown-herbal-tea-whole-flower-heads",
+      "image": "gen/g0008-sage-crown-herbal-tea-whole-flower-heads.jpg",
+      "caption": "Sage Crown Herbal Tea ✨\n\nSteep, sip and slow down.\n\n$4.99 CAD\n\nShop now at amotherspassion.ca/products/sage-crown-herbal-tea-whole-flower-heads-by-rayhana-organics",
+      "tags": "#HerbalTea #NaturalWellness",
+      "kind": "product",
+      "ref": "sage-crown-herbal-tea-whole-flower-heads-by-rayhana-organics",
+      "template": "arch"
+    },
+    {
+      "id": "g0009-trillium-ottoman-with-sunbrella-cushion",
+      "image": "gen/g0009-trillium-ottoman-with-sunbrella-cushion.jpg",
+      "caption": "Trillium Ottoman with Sunbrella® Cushion ✨\n\nMade for slow evenings together.\n\n$1,140.00 CAD\n\nShop now at amotherspassion.ca/products/trillium-ottoman-with-sunbrella®-cushion",
+      "tags": "#OutdoorLiving #HomeSweetHome",
+      "kind": "product",
+      "ref": "trillium-ottoman-with-sunbrella®-cushion",
+      "template": "frame"
+    },
+    {
+      "id": "g0010-cat-dogs-cats",
+      "image": "gen/g0010-cat-dogs-cats.jpg",
+      "caption": "For the Fur Babies You Love 💗\n\nCat trees, beds and cozy hideouts for every member of the family.\n\nShop Dogs & Cats at amotherspassion.ca/collections/dogs-cats",
+      "tags": "#DogsAndCats #FurBabies #PetLovers",
+      "kind": "category",
+      "ref": "dogs-cats",
+      "template": "cat"
+    },
+    {
+      "id": "g0011-the-noba-cottage-scratchable-cat-house",
+      "image": "gen/g0011-the-noba-cottage-scratchable-cat-house.jpg",
+      "caption": "The Noba Cottage Scratchable Cat House ✨\n\nFor a home that feels like a hug.\n\n$149.99 CAD\n\nShop now at amotherspassion.ca/products/the-noba-cottage-scratchable-cat-house",
+      "tags": "#CozyHome #HomeDecor",
+      "kind": "product",
+      "ref": "the-noba-cottage-scratchable-cat-house",
+      "template": "arch"
+    },
+    {
+      "id": "g0012-ocina",
+      "image": "gen/g0012-ocina.jpg",
+      "caption": "Ocina ✨\n\nA little sparkle for every day.\n\n$38.00 CAD\n\nShop now at amotherspassion.ca/products/ocina",
+      "tags": "#JewelryLover #GiftsForHer",
+      "kind": "product",
+      "ref": "ocina",
+      "template": "frame"
+    },
+    {
+      "id": "g0013-classic-medium-wood-reversible-cutting-b",
+      "image": "gen/g0013-classic-medium-wood-reversible-cutting-b.jpg",
+      "caption": "Classic Medium Wood Reversible Cutting Board ✨\n\nBeautiful pieces for the heart of your home.\n\n$89.95 CAD\n\nShop now at amotherspassion.ca/products/classic-medium-wood-reversible-cutting-board",
+      "tags": "#KitchenEssentials #HomeCooking",
+      "kind": "product",
+      "ref": "classic-medium-wood-reversible-cutting-board",
+      "template": "arch"
+    },
+    {
+      "id": "g0014-cat-fur-baby-fits",
+      "image": "gen/g0014-cat-fur-baby-fits.jpg",
+      "caption": "Dressed Up & Adorable 💗\n\nSweet outfits and dresses for your little fur baby.\n\nShop Fur Baby Fits (Outfits) at amotherspassion.ca/collections/fur-baby-fits",
+      "tags": "#DogFashion #FurBabyFits #DogMom",
+      "kind": "category",
+      "ref": "fur-baby-fits",
+      "template": "cat"
+    },
+    {
+      "id": "g0015-united-by-blue-mens-selby-organic-cotton",
+      "image": "gen/g0015-united-by-blue-mens-selby-organic-cotton.jpg",
+      "caption": "United By Blue Mens Selby Organic Cotton Shorts ✨\n\nQuality basics for the guys in your life.\n\n$69.99 CAD\n\nShop now at amotherspassion.ca/products/united-by-blue-mens-selby-organic-cotton-shorts",
+      "tags": "#MensStyle #GiftsForHim",
+      "kind": "product",
+      "ref": "united-by-blue-mens-selby-organic-cotton-shorts",
+      "template": "frame"
+    },
+    {
+      "id": "g0016-foreo-faq-102-rf-radio-frequency-ems-led",
+      "image": "gen/g0016-foreo-faq-102-rf-radio-frequency-ems-led.jpg",
+      "caption": "Foreo FAQ™102 RF Radio Frequency EMS & LED ✨\n\nSpa-level self-care, right at home.\n\n$889.00 CAD\n\nShop now at amotherspassion.ca/products/foreo-faq™102-rf-radio-frequency-ems-led-device-topaz",
+      "tags": "#BeautyTech #RedLightTherapy #AtHomeSpa",
+      "kind": "product",
+      "ref": "foreo-faq™102-rf-radio-frequency-ems-led-device-topaz",
+      "template": "arch"
+    },
+    {
+      "id": "g0017-digital-product",
+      "image": "gen/g0017-digital-product.jpg",
+      "caption": "8 Days to Authentic Marketing ✨\n\nGrow your skills at your own pace.\n\n$14.99 CAD\n\nShop now at amotherspassion.ca/products/digital-product",
+      "tags": "#eBooks #MomBoss #KeepLearning",
+      "kind": "product",
+      "ref": "digital-product",
+      "template": "frame"
+    },
+    {
+      "id": "g0018-cat-garden-outdoor",
+      "image": "gen/g0018-cat-garden-outdoor.jpg",
+      "caption": "Grow Something Beautiful 💗\n\nPlants and garden goods for a greener, calmer home.\n\nShop Garden & Outdoor at amotherspassion.ca/collections/garden-outdoor",
+      "tags": "#GardenLife #PlantMom",
+      "kind": "category",
+      "ref": "garden-outdoor",
+      "template": "cat"
+    },
+    {
+      "id": "g0019-perfect-sports-creatine-400g",
+      "image": "gen/g0019-perfect-sports-creatine-400g.jpg",
+      "caption": "Perfect Sports Creatine ✨\n\nEveryday support for your wellness.\n\nOn sale: $24.99 CAD (was $34.95 CAD)\n\nShop now at amotherspassion.ca/products/perfect-sports-creatine-400g",
+      "tags": "#Supplements #DailyWellness",
+      "kind": "product",
+      "ref": "perfect-sports-creatine-400g",
+      "template": "sale"
+    },
+    {
+      "id": "g0020-blisspod-portable-personal-full-body-60-",
+      "image": "gen/g0020-blisspod-portable-personal-full-body-60-.jpg",
+      "caption": "Blisspod Portable ✨\n\nSmart tools for recovery and calm.\n\nOn sale: $249.00 CAD (was $329.00 CAD)\n\nShop now at amotherspassion.ca/products/blisspod-portable-personal-full-body-60-min-rapid-steam-sauna-pentagonal-grey-powerful-1600-watts-3-6l-stronger-steamer-90x90x190cm",
+      "tags": "#WellnessTech #Sauna #Recovery",
+      "kind": "product",
+      "ref": "blisspod-portable-personal-full-body-60-min-rapid-steam-sauna-pentagonal-grey-powerful-1600-watts-3-6l-stronger-steamer-90x90x190cm",
+      "template": "sale"
+    },
+    {
+      "id": "g0021-vanilla-eclipse-bath-bomb",
+      "image": "gen/g0021-vanilla-eclipse-bath-bomb.jpg",
+      "caption": "Vanilla Eclipse Bath Bomb ✨\n\nOne of our most-loved finds right now.\n\n$7.50 CAD\n\nShop now at amotherspassion.ca/products/vanilla-eclipse-bath-bomb",
+      "tags": "#TrendingNow #Deals",
+      "kind": "product",
+      "ref": "vanilla-eclipse-bath-bomb",
+      "template": "arch"
+    },
+    {
+      "id": "g0022-cat-frontpage",
+      "image": "gen/g0022-cat-frontpage.jpg",
+      "caption": "A Healthier, Greener Home 💗\n\nNatural, low-tox goods for the place your family loves most.\n\nShop Green Home at amotherspassion.ca/collections/frontpage",
+      "tags": "#GreenHome #HealthyHome #LowTox",
+      "kind": "category",
+      "ref": "frontpage",
+      "template": "cat"
+    },
+    {
+      "id": "g0023-womens-printed-3d-effect-knitted-cardiga",
+      "image": "gen/g0023-womens-printed-3d-effect-knitted-cardiga.jpg",
+      "caption": "Women's Printed 3D-Effect Knitted Cardigan Coat ✨\n\nFor nights out and family photo days.\n\n$79.99 CAD\n\nShop now at amotherspassion.ca/products/womens-printed-3d-effect-knitted-cardigan-coat",
+      "tags": "#WomensFashion #OOTD",
+      "kind": "product",
+      "ref": "womens-printed-3d-effect-knitted-cardigan-coat",
+      "template": "frame"
+    }
+  ]
+}
