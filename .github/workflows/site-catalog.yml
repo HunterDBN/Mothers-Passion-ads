@@ -1,0 +1,40 @@
+name: Site catalog snapshot
+
+# Saves the product and category list from amotherspassion.ca into site/ so ads
+# can rotate through every product and collection. Runs on demand and weekly.
+on:
+  push:
+    branches: [claude/project-thread-7spy7t]
+    paths: [.github/workflows/site-catalog.yml]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 10 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch site data
+        run: |
+          mkdir -p site
+          UA="Mozilla/5.0 (compatible; catalog-snapshot)"
+          base=https://amotherspassion.ca
+          curl -sSL -A "$UA" "$base/" -o site/home.html || true
+          curl -sSL -A "$UA" "$base/sitemap.xml" -o site/sitemap.xml || true
+          for p in 1 2 3 4; do
+            curl -sSL -A "$UA" "$base/products.json?limit=250&page=$p" -o site/products-$p.json || true
+          done
+          curl -sSL -A "$UA" "$base/collections.json?limit=250" -o site/collections.json || true
+          curl -sSL -A "$UA" "$base/wp-json/wc/store/v1/products?per_page=100" -o site/wc-products.json || true
+          curl -sSL -A "$UA" "$base/wp-json/wc/store/v1/products/categories?per_page=100" -o site/wc-categories.json || true
+          ls -la site; head -c 300 site/products-1.json; echo; head -c 300 site/home.html
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site
+          git diff --cached --quiet || (git commit -m "Update site catalog snapshot" && git pull --rebase && git push)
