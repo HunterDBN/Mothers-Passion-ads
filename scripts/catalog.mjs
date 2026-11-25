@@ -12,7 +12,7 @@ const get = async (path) => {
   }
   throw new Error(`fetch failed ${path}`);
 };
-const strip = (h = "") => h.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+const strip = (h) => String(h || "").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
 
 async function pages(path) {
   const out = [];
@@ -54,7 +54,7 @@ for (const c of cols) {
   handles.forEach((h) => byHandle[h].collections.push(c.handle));
   collections.push({
     handle: c.handle,
-    title: c.title.replace(/\s+/g, " ").trim(),
+    title: String(c.title || c.handle).replace(/\s+/g, " ").trim(),
     image: c.image?.src || null,
     description: strip(c.description).slice(0, 300),
     count: handles.length,
