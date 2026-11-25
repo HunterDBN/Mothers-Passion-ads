@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- This is the parent sitemap linking to additional sitemaps for products, collections and pages as shown below. The sitemap can not be edited manually, but is kept up to date in real time. -->
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_agentic_discovery.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_products_1.xml?from=7947106287699&amp;to=8088497881171</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_products_2.xml?from=8088498045011&amp;to=8092106358867</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_products_3.xml?from=8092106391635&amp;to=8102138871891</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_products_4.xml?from=8102138904659&amp;to=8104994996307</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_pages_1.xml?from=98557263955&amp;to=166037979219</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_collections_1.xml?from=290746695763&amp;to=317312630867</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_blogs_1.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://amotherspassion.ca/sitemap_articles_1.xml</loc>
+  </sitemap>
+</sitemapindex>
