@@ -28,7 +28,7 @@ function loadCatalog() {
   return c;
 }
 
-const money = (v) => `$${Number(v).toFixed(2)}`;
+const money = (v) => `$${Number(v).toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
 const sized = (src, w = 1200) => src + (src.includes("?") ? "&" : "?") + `width=${w}`;
 
@@ -43,7 +43,14 @@ function shortTitle(t) {
 function plan(n, catalog, copy, st) {
   const cols = catalog.collections.filter((c) => c.count > 0);
   const catCols = cols.filter((c) => c.count >= 4);
-  const byCol = Object.fromEntries(cols.map((c) => [c.handle, catalog.products.filter((p) => p.collections.includes(c.handle))]));
+  // Products per category, with titles matching the category's "prefer" words first.
+  const byCol = Object.fromEntries(cols.map((c) => {
+    const list = catalog.products.filter((p) => p.collections.includes(c.handle));
+    const words = copy.collections[c.handle]?.prefer;
+    if (!words) return [c.handle, list];
+    const re = new RegExp(words, "i");
+    return [c.handle, [...list.filter((p) => re.test(p.title)), ...list.filter((p) => !re.test(p.title))]];
+  }));
   const allHandles = new Set(catalog.products.map((p) => p.handle));
   st.used = (st.used || []).filter((h) => allHandles.has(h));
   const used = new Set(st.used);
@@ -54,8 +61,9 @@ function plan(n, catalog, copy, st) {
       const c = catCols[st.cat_i++ % catCols.length];
       const cc = copy.collections[c.handle] || copy.default;
       const picks = byCol[c.handle];
-      const off = (st.cat_round = (st.cat_round || 0) + 1) * 4;
-      const four = [0, 1, 2, 3].map((i) => picks[(off + i) % picks.length]);
+      const round = Math.floor(st.cat_i / catCols.length);
+      const pool = picks.slice(0, Math.max(8, Math.min(picks.length, 24)));
+      const four = [0, 1, 2, 3].map((i) => pool[(round * 4 + i) % pool.length]);
       out.push({
         id: `g${String(idx).padStart(4, "0")}-cat-${slug(c.handle)}`,
         template: "cat", theme: cc.theme === "blush" ? "blush" : "",

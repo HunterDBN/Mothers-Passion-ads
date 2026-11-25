@@ -202,7 +202,12 @@ function loadState() {
 // (every few hours) picks up where it left off as posts go out and free up room.
 async function fill(daysArg) {
   const days = Number(daysArg || process.env.FILL_DAYS || 14);
-  const { ads, hashtags } = readJson("ads/ads.json");
+  const { ads: legacy, hashtags } = readJson("ads/ads.json");
+  // Generated catalog ads (scripts/generate.mjs) are used in order; the original
+  // Canva ads are the fallback if none are ready.
+  const genPath = path.join(ROOT, "ads/generated.json");
+  const generated = fs.existsSync(genPath) ? readJson("ads/generated.json").ads : [];
+  const ads = [...generated, ...legacy];
   const state = loadState();
   const channels = DRY
     ? SERVICES.map((s) => ({ service: s, name: "dry-run", id: "-" }))
@@ -227,13 +232,21 @@ async function fill(daysArg) {
       if (due.getTime() < now + 10 * 60 * 1000) continue;
       const entry = rec || { ad: null, done: [] };
       if (!entry.ad) {
-        entry.ad = ads[state.next_index % ads.length].id;
-        state.next_index = (state.next_index + 1) % ads.length;
+        const gi = state.gen_next || 0;
+        if (gi < generated.length) {
+          entry.ad = generated[gi].id;
+          state.gen_next = gi + 1;
+        } else {
+          entry.ad = legacy[state.next_index % legacy.length].id;
+          state.next_index = (state.next_index + 1) % legacy.length;
+        }
       }
       state.slots[key] = entry;
       const ad = ads.find((a) => a.id === entry.ad) || ads[0];
       const text = `${ad.caption}\n\n${hashtags} ${ad.tags || ""}`.trim();
-      const imageUrl = `${IMAGE_BASE}/${ad.id}.jpg`;
+      const imageUrl = ad.image
+        ? `${IMAGE_BASE.replace(/\/images\/?$/, "")}/${ad.image}`
+        : `${IMAGE_BASE}/${ad.id}.jpg`;
       for (const ch of pending) {
         const label = `${key} ${TZ} -> ${ch.service}:${ch.name} :: ${ad.id}`;
         if (DRY) { console.log(`[dry] ${label}`); entry.done.push(ch.service); continue; }

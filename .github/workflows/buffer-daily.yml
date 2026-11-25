@@ -31,6 +31,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Install Playwright
+        run: |
+          npm i --no-save playwright@1.49.1
+          npx playwright install --with-deps chromium
+      - name: Generate catalog ads
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          node scripts/generate.mjs ensure 24
+          git add ads/gen ads/generated.json ads/gen-state.json site
+          git diff --cached --quiet || (git commit -m "Generate catalog ads" && git push)
       - name: Top up Buffer queue
         env:
           BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
