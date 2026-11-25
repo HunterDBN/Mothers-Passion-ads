@@ -1,0 +1,162 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/fonts.css">
+<style>
+:root{--blush:#F6E8E2;--blush2:#EFD6CD;--terra:#A55D4C;--terra2:#9A5544;--body:#5C524E;--pill:#E4ADA2;
+  --sage:#C9D4BA;--sage2:#5E7152;--sage3:#E6ECDD;--cream:#F8F3EC;--crimson:#A23B45;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden}
+body{font-variant-numeric:lining-nums;font-family:'Jost',sans-serif;color:var(--body);-webkit-font-smoothing:antialiased}
+.ad{position:relative;width:1080px;height:1920px;overflow:hidden;display:none}
+.serif{font-family:'Cormorant Garamond',serif;font-variant-numeric:lining-nums}
+.logo{display:block;margin:0 auto}
+.url{font-family:'Jost';font-weight:600;letter-spacing:.02em}
+.pill{display:inline-block;padding:26px 74px;border-radius:999px;font-weight:500;letter-spacing:.22em;font-size:34px;color:#fff}
+.photo{position:absolute;inset:0;overflow:hidden;background:#fff}
+.photo .blur{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(40px) saturate(.9);opacity:.55;transform:scale(1.1)}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.photo.cover img{object-fit:cover}
+.fit{overflow:hidden}
+.was{text-decoration:line-through;text-decoration-thickness:2px}
+.rule{display:flex;align-items:center;gap:22px;justify-content:center}
+.rule:before,.rule:after{content:"";height:2px;width:140px;background:currentColor;opacity:.45}
+
+/* ARCH */
+#arch{background:radial-gradient(1200px 900px at 50% 30%,#FBF1EC 0%,var(--blush) 55%,var(--blush2) 100%)}
+#arch.sage{background:radial-gradient(1200px 900px at 50% 30%,#F3F6EE 0%,var(--sage3) 55%,#D6DFCA 100%)}
+#arch .logo{width:230px;margin-top:86px}
+#arch .eyebrow{text-align:center;margin-top:34px;font-size:30px;letter-spacing:.34em;color:var(--terra);font-weight:500}
+#arch.sage .eyebrow,#arch.sage .head,#arch.sage .price{color:var(--sage2)}
+#arch .frame{position:absolute;left:120px;top:450px;width:840px;height:900px;border-radius:420px 420px 36px 36px;overflow:hidden;box-shadow:0 30px 60px rgba(120,70,60,.16);border:10px solid rgba(255,255,255,.85)}
+#arch .head{position:absolute;left:90px;right:90px;top:1400px;height:200px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:600;color:var(--terra);line-height:1.02}
+#arch .price{position:absolute;left:0;right:0;top:1622px;text-align:center;font-size:56px;font-weight:600;color:var(--terra2)}
+#arch .price .was{font-family:'Jost';font-weight:400;font-size:32px;color:#9b8f8a;margin-left:18px}
+#arch .cta{position:absolute;left:0;right:0;top:1712px;text-align:center}
+#arch .pill{background:var(--pill);padding:20px 62px;font-size:30px}
+#arch.sage .pill{background:#8FA27F}
+#arch .url{position:absolute;left:0;right:0;bottom:44px;text-align:center;font-size:38px;color:var(--terra2)}
+#arch.sage .url{color:var(--sage2)}
+
+/* SALE */
+#sale{background:var(--cream)}
+#sale .top{position:absolute;left:0;right:0;top:0;height:250px;display:flex;align-items:center;justify-content:center}
+#sale .top .logo{width:200px}
+#sale .ph{position:absolute;left:60px;right:60px;top:250px;height:860px;border-radius:28px;overflow:hidden}
+#sale .tag{position:absolute;right:96px;top:290px;background:var(--crimson);color:#fff;font-size:30px;letter-spacing:.2em;padding:14px 30px;border-radius:999px;font-weight:500}
+#sale .word{position:absolute;left:0;right:0;top:1140px;text-align:center;font-size:170px;font-weight:600;color:var(--crimson);letter-spacing:.06em;line-height:1}
+#sale .price{position:absolute;left:0;right:0;top:1320px;text-align:center;font-size:104px;font-weight:600;color:var(--crimson);line-height:1}
+#sale .price small{font-size:44px;letter-spacing:.04em}
+#sale .was{position:absolute;left:0;right:0;top:1446px;text-align:center;font-size:40px;color:#8d8582;letter-spacing:.06em}
+#sale .name{position:absolute;left:110px;right:110px;top:1520px;height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-style:italic;color:var(--body);line-height:1.08}
+#sale .foot{position:absolute;left:0;right:0;bottom:70px;text-align:center;color:var(--terra2)}
+#sale .foot .rule{font-size:38px}
+#sale .foot .sub{font-size:26px;letter-spacing:.3em;margin-bottom:16px;color:#8d8582}
+
+/* FRAME */
+#frame{background:var(--cream)}
+#frame .logo{width:210px;margin-top:80px}
+#frame .quote{position:absolute;left:100px;right:100px;top:360px;height:250px;display:flex;align-items:center;justify-content:center;text-align:center;font-style:italic;color:var(--terra);line-height:1.1}
+#frame.sage .quote{color:var(--sage2)}
+#frame .fwrap{position:absolute;left:150px;top:650px;width:780px;height:780px}
+#frame .fwrap:before{content:"";position:absolute;inset:-26px;border:2px solid var(--terra);opacity:.35;border-radius:6px}
+#frame.sage .fwrap:before{border-color:var(--sage2)}
+#frame .fwrap .photo{border-radius:4px}
+#frame .name{position:absolute;left:110px;right:110px;top:1480px;height:110px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--body);line-height:1.2}
+#frame .price{position:absolute;left:0;right:0;top:1596px;text-align:center;font-size:58px;font-weight:600;color:var(--terra2)}
+#frame.sage .price{color:var(--sage2)}
+#frame .foot{position:absolute;left:0;right:0;bottom:0;height:190px;display:flex;border-top:2px solid rgba(94,113,82,.35)}
+#frame .foot div{flex:1;display:flex;align-items:center;justify-content:center;font-size:36px}
+#frame .foot .l{background:#F1E9DF;color:var(--body);letter-spacing:.14em;font-weight:500}
+#frame .foot .r{background:var(--blush2);color:var(--terra2)}
+#frame.sage .foot .r{background:var(--sage);color:var(--sage2)}
+
+/* CATEGORY */
+#cat{background:var(--cream)}
+#cat .hdr{position:absolute;left:0;right:0;top:0;height:640px;background:var(--sage)}
+#cat.blush .hdr{background:var(--blush2)}
+#cat .hdr .logo{width:190px;margin-top:64px}
+#cat .eyebrow{text-align:center;margin-top:26px;font-size:28px;letter-spacing:.34em;color:var(--sage2);font-weight:500}
+#cat .head{position:absolute;left:80px;right:80px;top:350px;height:250px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:600;color:var(--sage2);line-height:1.02}
+#cat.blush .eyebrow,#cat.blush .head{color:var(--terra)}
+#cat .grid{position:absolute;left:60px;right:60px;top:690px;height:860px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:20px}
+#cat .grid .cell{position:relative;border-radius:22px;overflow:hidden;background:#fff}
+#cat .sub{position:absolute;left:110px;right:110px;top:1576px;height:120px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:36px;line-height:1.3;color:var(--body)}
+#cat .foot{position:absolute;left:0;right:0;bottom:0;height:190px;display:flex;border-top:2px solid rgba(94,113,82,.35)}
+#cat .foot div{flex:1;display:flex;align-items:center;justify-content:center;font-size:36px}
+#cat .foot .l{background:#EEF2E8;color:var(--sage2);font-weight:600;letter-spacing:.04em}
+#cat .foot .r{background:var(--sage);color:var(--sage2)}
+#cat.blush .foot .l{background:#F8ECE7;color:var(--terra2)}
+#cat.blush .foot .r{background:var(--blush2);color:var(--terra2)}
+</style></head>
+<body>
+<div class="ad" id="arch">
+  <img class="logo" data-logo>
+  <div class="eyebrow" data-k="eyebrow"></div>
+  <div class="frame"><div class="photo" data-img="0"></div></div>
+  <div class="head serif fit" data-k="headline" data-max="84" data-min="48"></div>
+  <div class="price serif"><span data-k="price"></span><span class="was" data-k="was"></span></div>
+  <div class="cta"><span class="pill">SHOP NOW</span></div>
+  <div class="url">amotherspassion.ca</div>
+</div>
+
+<div class="ad" id="sale">
+  <div class="top"><img class="logo" data-logo></div>
+  <div class="ph"><div class="photo" data-img="0"></div></div>
+  <div class="tag" data-k="save"></div>
+  <div class="word serif">SALE</div>
+  <div class="price serif"><span data-k="price_num"></span><small> CAD</small></div>
+  <div class="was" data-k="was_line"></div>
+  <div class="name serif fit" data-k="headline" data-max="58" data-min="38"></div>
+  <div class="foot"><div class="sub">SHOP NOW AT</div><div class="rule url">amotherspassion.ca</div></div>
+</div>
+
+<div class="ad" id="frame">
+  <img class="logo" data-logo>
+  <div class="quote serif fit" data-k="quote" data-max="72" data-min="44"></div>
+  <div class="fwrap"><div class="photo" data-img="0"></div></div>
+  <div class="name fit" data-k="headline" data-max="40" data-min="28"></div>
+  <div class="price serif" data-k="price"></div>
+  <div class="foot"><div class="l">SHOP NOW &rarr;</div><div class="r url">amotherspassion.ca</div></div>
+</div>
+
+<div class="ad" id="cat">
+  <div class="hdr"><img class="logo" data-logo><div class="eyebrow" data-k="eyebrow"></div></div>
+  <div class="head serif fit" data-k="headline" data-max="96" data-min="56"></div>
+  <div class="grid">
+    <div class="cell"><div class="photo" data-img="0"></div></div>
+    <div class="cell"><div class="photo" data-img="1"></div></div>
+    <div class="cell"><div class="photo" data-img="2"></div></div>
+    <div class="cell"><div class="photo" data-img="3"></div></div>
+  </div>
+  <div class="sub" data-k="sub"></div>
+  <div class="foot"><div class="l" data-k="shop"></div><div class="r url">amotherspassion.ca</div></div>
+</div>
+
+<script>
+async function render(d){
+  const el=document.getElementById(d.template);
+  el.style.display='block';
+  if(d.theme) el.classList.add(d.theme);
+  el.querySelectorAll('[data-logo]').forEach(i=>i.src=d.logo);
+  el.querySelectorAll('[data-k]').forEach(n=>{n.textContent=d[n.dataset.k]||''});
+  const loads=[];
+  el.querySelectorAll('[data-img]').forEach(p=>{
+    const src=d.images[Number(p.dataset.img)%d.images.length];
+    p.innerHTML='<div class="blur"></div><img>';
+    p.querySelector('.blur').style.backgroundImage=`url("${src}")`;
+    const im=p.querySelector('img');
+    loads.push(new Promise(r=>{im.onload=r;im.onerror=r;}));
+    im.src=src;
+  });
+  loads.push(...[...el.querySelectorAll('img[data-logo]')].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r;})));
+  await document.fonts.ready;
+  await Promise.all(loads);
+  el.querySelectorAll('.fit').forEach(n=>{
+    let s=Number(n.dataset.max); const min=Number(n.dataset.min);
+    n.style.fontSize=s+'px';
+    while(s>min && (n.scrollHeight>n.clientHeight+2 || n.scrollWidth>n.clientWidth+2)){s-=2;n.style.fontSize=s+'px';}
+  });
+  return true;
+}
+</script>
+</body></html>
