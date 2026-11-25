@@ -1,0 +1,39 @@
+name: Site catalog snapshot
+
+# Saves the product and category list from amotherspassion.ca into site/ so ads
+# can rotate through every product and collection. Runs on demand and weekly.
+on:
+  push:
+    branches: [claude/project-thread-7spy7t]
+    paths: [.github/workflows/site-catalog.yml, scripts/catalog.mjs]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 10 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build catalog
+        run: node scripts/catalog.mjs
+      - name: Download brand logo candidates
+        run: |
+          mkdir -p assets/site
+          b=https://amotherspassion.ca/cdn/shop/files
+          curl -sSfL "$b/file_00000000152882119eec6bdd40345557_e48ca1e6-db66-46d8-998c-a11550e9b5e3.png?width=1200" -o assets/site/header-logo.png || true
+          curl -sSfL "$b/ss_009a29f8-0fd6-48ef-b864-b98784d74ee7.jpg?width=1200" -o assets/site/og-image.jpg || true
+          curl -sSfL "$b/ss.jpg?width=600" -o assets/site/favicon.jpg || true
+          ls -la assets/site
+      - name: Commit snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site assets
+          git diff --cached --quiet || (git commit -m "Update site catalog snapshot" && git pull --rebase && git push)

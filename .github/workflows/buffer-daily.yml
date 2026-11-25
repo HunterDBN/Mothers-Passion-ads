@@ -1,0 +1,56 @@
+name: Buffer daily ads
+
+# Every 6 hours, top up the Buffer queue for Facebook and TikTok: 4 posts a day at
+# 7:30 AM, 12:15 PM, 5:30 PM and 8:30 PM Vancouver time, as many days ahead as
+# Buffer's queue limit allows (up to FILL_DAYS). As posts go out, new ones are added.
+on:
+  schedule:
+    - cron: "15 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "How many days ahead to fill (default 14)."
+        required: false
+      dry_run:
+        description: "Set to 1 to preview without posting"
+        required: false
+        default: "0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: buffer-daily
+  cancel-in-progress: false
+
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: |
+          npm i --no-save playwright@1.49.1
+          npx playwright install --with-deps chromium
+      - name: Generate catalog ads
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          node scripts/generate.mjs ensure 24
+          git add ads/gen ads/generated.json ads/gen-state.json site
+          git diff --cached --quiet || (git commit -m "Generate catalog ads" && git push)
+      - name: Top up Buffer queue
+        env:
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+        run: node scripts/buffer.mjs fill ${{ github.event.inputs.days }}
+      - name: Save rotation state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ads/state.json
+          git diff --cached --quiet || (git commit -m "Update ad rotation state" && git push)
